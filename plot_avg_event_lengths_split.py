@@ -12,20 +12,20 @@ Bring up the visualization window.
 view = "lateral"
 hemi = "split"
 
-length = str(40)
+length = str(10)
 
 brain = Brain("fsaverage", hemi, "inflated", title=length + " Second Events",cortex='low_contrast',views=['lat','med'],background="white")
 
 """
 Get a path to the overlay file.
 """
-mri_file = '/Users/jamalw/Desktop/PNI/music_event_structures/' + length + '_sec_events_cb_edit.nii.gz'
+mri_file = '/Users/jamalw/Desktop/PNI/music_event_structures/' + length + '_sec_events.nii.gz'
 reg_file = '/Applications/freesurfer/average/mni152.register.dat'
 
 data = nib.load(mri_file)
 minval = 0
-#maxval = np.max(data.get_data())
-maxval = .0389 
+maxval = np.max(data.get_data())
+#maxval = .0389 
 
 surf_data_lh = project_volume_data(mri_file,"lh",reg_file)
 surf_data_rh = project_volume_data(mri_file,"rh",reg_file)
