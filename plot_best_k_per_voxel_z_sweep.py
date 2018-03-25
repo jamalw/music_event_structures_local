@@ -12,6 +12,7 @@ nii_template = nib.load('/Users/jamalw/Desktop/PNI/music_event_structures/trans_
 datadir = '/Users/jamalw/Desktop/PNI/music_event_structures/'
 
 zvals = np.arange(0.05,.25,.01)
+#zvals = [0.05]
 
 for z in zvals: 
     # load,zscore,then store each dataset for each K in a list
@@ -79,9 +80,13 @@ for z in zvals:
     for overlay in brain.overlays_dict["thirty_sec_rh"]:
         overlay.remove()
 
-    brain.add_data(surf_data_lh, 0,maxval, colormap="CMRmap", alpha=.65,
+    brain.add_data(surf_data_lh, 0,maxval, colormap="rainbow", alpha=.65,
                hemi='lh')
-    brain.add_data(surf_data_rh, 0,maxval, colormap="CMRmap", alpha=.65,
+    brain.add_data(surf_data_rh, 0,maxval, colormap="rainbow", alpha=.65,
                hemi='rh')
 
     brain.save_image(datadir + 'plots/avg_raw_zthresh_' + str(z) + ".png")
+    
+    mlab.show()   
+ 
+    brain.show_view(view)
