@@ -47,7 +47,7 @@ for s in range(len(songs)):
         img = nib.Nifti1Image(max_K,affine = nii_template.affine)
         img.header['cal_min'] = minval
         img.header['cal_max'] = maxval
-        nib.save(img, datadir + songs[s] +  '/avg_data/best_k_map_z' + str(z) + '.nii.gz')
+        nib.save(img, datadir + songs[s] +  '/best_k_map_z' + str(z) + '.nii.gz')
 
         brain = Brain("fsaverage", hemi, "inflated", title= songs[s] + ' Z='+str(z),cortex='low_contrast',views=['lat','med'],background="white")
 
