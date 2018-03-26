@@ -13,7 +13,7 @@ songs = np.array(['St_Pauls_Suite','I_Love_Music','Moonlight_Sonata','Change_of_
 nii_template = nib.load('/Users/jamalw/Desktop/PNI/music_event_structures/trans_filtered_func_data.nii')
 datadir = '/Users/jamalw/Desktop/PNI/music_event_structures/'
 
-zvals = np.arange(0.05,.25,.01)
+zvals = np.arange(0.05,.95,.05)
 #zvals = [0.05]
 
 for s in range(len(songs)):
@@ -25,8 +25,8 @@ for s in range(len(songs)):
         maxval_per_maxK = np.zeros((91,109,91,14)) 
 
         for i in range(3,17):
-            data = nib.load(datadir + songs[s] + '/globals_avg_real_n25_k' + str(i) + '.npy').get_data()
-            load_z = nib.load(datadir + songs[s] + '/globals_avg_z_n25_k' + str(i) + '.npy').get_data()
+            data = np.load(datadir + songs[s] + '/globals_avg_real_n25_k' + str(i) + '.npy')
+            load_z = np.load(datadir + songs[s] + '/globals_avg_z_n25_k' + str(i) + '.npy')
             k_data[:,:,:,i-3] = data
             z_data[:,:,:,i-3] = load_z 
 
@@ -47,14 +47,14 @@ for s in range(len(songs)):
         img = nib.Nifti1Image(max_K,affine = nii_template.affine)
         img.header['cal_min'] = minval
         img.header['cal_max'] = maxval
-        nib.save(img, datadir + songs[s] +  '/best_k_map_z' + str(z) + '.nii.gz')
+        nib.save(img, datadir + songs[s] +  '/best_k_map_z_' + str(z) + '.nii.gz')
 
         brain = Brain("fsaverage", hemi, "inflated", title= songs[s] + ' Z='+str(z),cortex='low_contrast',views=['lat','med'],background="white")
 
         """
         Get a path to the overlay file.
         """
-        mri_file = '/Users/jamalw/Desktop/PNI/music_event_structures/' + songs[s] + '/best_k_map_z' + str(z) + '.nii.gz'
+        mri_file = '/Users/jamalw/Desktop/PNI/music_event_structures/' + songs[s] + '/best_k_map_z_' + str(z) + '.nii.gz'
         reg_file = '/Applications/freesurfer/average/mni152.register.dat'
 
         data = nib.load(mri_file)
@@ -79,6 +79,5 @@ for s in range(len(songs)):
 
         brain.save_image(datadir + songs[s] + '/plots/avg_raw_zthresh_' + str(z) + ".png")
     
-#mlab.show()   
- 
-#brain.show_view(view)
+        #mlab.show()   
+        brain.show_view(view)
